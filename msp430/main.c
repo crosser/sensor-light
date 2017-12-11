@@ -13,42 +13,41 @@ int main(void)
 
 	WDTCTL = WDTPW | WDTHOLD;	// stop watchdog timer
 	// Configure GPIO Out
-	P1DIR |= BIT0|BIT1|BIT2;     // Set P1.0&1&2/LEDs to output direction
-	P1OUT &= ~(BIT0|BIT1);       // P1.0&1 LEDs off
-	P1SEL1 |= BIT2;              // P1.2 PWM out
+	P1DIR |= BIT0|BIT1|BIT2;	// Set LEDs & PWM to output direction
+	P1OUT &= ~(BIT0|BIT1);		// P1.0&1 LEDs off
+	P1SEL1 |= BIT2;			// P1.2 PWM out
 
 	// Configure GPIO In
-	P2DIR &= ~(BIT3|BIT7);       // Buttons
-	P2OUT |= BIT3|BIT7;          // Pull up
-	P2REN |= BIT3|BIT7;          // Enable pull-up
-	P2IES |= BIT3|BIT7;          // INT on Hi->Lo edge
-	P2IE  |= BIT3|BIT7;          // INT enable
+	P2DIR &= ~(BIT3|BIT7);		// Buttons
+	P2OUT |= BIT3|BIT7;		// Pull up
+	P2REN |= BIT3|BIT7;		// Enable pull-up
+	P2IES |= BIT3|BIT7;		// INT on Hi->Lo edge
+	P2IE  |= BIT3|BIT7;		// INT enable
 
-	P2DIR &= ~(BIT2|BIT5);       // PIR Sensors
-	P2OUT &= ~(BIT2|BIT5);       // Pull down
-	P2REN |= BIT2|BIT5;          // Enable pull-down
-	P2IES &= ~(BIT2|BIT5);       // INT on Lo->Hi edge
-	P2IE  |= BIT2|BIT5;          // INT enable
-	P2IFG = 0;                   // ??? Needed?
+	P2DIR &= ~(BIT2|BIT5);		// PIR Sensors
+	P2OUT &= ~(BIT2|BIT5);		// Pull down
+	P2REN |= BIT2|BIT5;		// Enable pull-down
+	P2IES &= ~(BIT2|BIT5);		// INT on Lo->Hi edge
+	P2IE  |= BIT2|BIT5;		// INT enable
 
 	// Configure ADC A7 pin
 	SYSCFG2 |= ADCPCTL7;
 
 	// Configure ADC10
-	ADCCTL0 |= ADCSHT_2 | ADCON;        // ADCON, S&H=16 ADC clks
-	ADCCTL1 |= ADCSHP;                  // ADCCLK = MODOSC; sampling timer
-	ADCCTL2 |= ADCRES;                  // 10-bit conversion results
-	ADCMCTL0 |= ADCINCH_7;              // A7 ADC input select; Vref=AVCC
-	ADCIE |= ADCIE0;                    // Enable ADC conv complete interrupt
+	ADCCTL0 |= ADCSHT_2 | ADCON;	// ADCON, S&H=16 ADC clks
+	ADCCTL1 |= ADCSHP;		// ADCCLK = MODOSC; sampling timer
+	ADCCTL2 |= ADCRES;		// 10-bit conversion results
+	ADCMCTL0 |= ADCINCH_7;		// A7 ADC input select; Vref=AVCC
+	ADCIE |= ADCIE0;		// Enable ADC conv complete interrupt
 
 	// Configure timer A0 for PWM
-	TA0CCR0 = 10000-1;                         // PWM Period
-	TA0CCTL2 = OUTMOD_7;                      // CCR2 reset/set
-	TA0CCR2 = 500;                     // CCR2 PWM duty cycle
-	TA0CTL = TASSEL__SMCLK | MC__UP | TACLR;  // SMCLK, up mode, clear TAR
+	TA0CCR0 = 10000-1;		// PWM Period
+	TA0CCTL2 = OUTMOD_7;		// CCR2 reset/set
+	TA0CCR2 = 500;			// CCR2 PWM duty cycle
+	TA0CTL = TASSEL__SMCLK | MC__UP | TACLR;	// SMCLK, up mode, clear TAR
 
 	//Configure timer A1 for counting time
-	TA1CTL |= TASSEL__SMCLK | MC__CONTINUOUS | TACLR | TAIE;     // SMCLK, no divider, continuous mode
+	TA1CTL |= TASSEL__SMCLK | MC__CONTINUOUS | TACLR | TAIE;	// SMCLK, no divider, continuous mode
 
 	// Disable the GPIO power-on default high-impedance mode to activate
 	// previously configured port settings
@@ -69,13 +68,13 @@ int main(void)
 				Time_Left = 15;
 				continue;
 			}
-			ADCCTL0 |= ADCENC | ADCSC;                       // Sampling and conversion start
-			P1OUT |= BIT1;                                   // Set P1.1 LED on
+			ADCCTL0 |= ADCENC | ADCSC;	// Sampling and conversion start
+			P1OUT |= BIT1;	// Set P1.1 LED on
 		}
 
 		// End of light measurement, set new Duty_Cycle and zero increment and tuns off green led
 		if (events & 1<<ev_adc) {
-			P1OUT &= ~BIT1;                                  // Clear P1.1 LED off
+			P1OUT &= ~BIT1;	// Clear P1.1 LED off
 			if (Time_Left)
 				continue;
 			if (ADC_Result < 200)
@@ -140,21 +139,21 @@ void __attribute__ ((interrupt(TIMER1_A1_VECTOR))) Timer_A (void)
 	switch(__even_in_range(TA1IV,TA1IV_TAIFG))
 	{
 		case TA1IV_NONE:
-			break;                               // No interrupt
+			break;	// No interrupt
 		case TA1IV_TACCR1:
-			break;                               // CCR1 not used
+			break;	// CCR1 not used
 		case TA1IV_TACCR2:
-			break;                               // CCR2 not used
+			break;	// CCR2 not used
 		case TA1IV_TAIFG:
 			irq_events |= 1<<ev_tmr;
-			__bic_SR_register_on_exit(LPM0_bits);            // Clear CPUOFF bit from LPM0
+			__bic_SR_register_on_exit(LPM0_bits);	// Clear CPUOFF bit from LPM0
 			break;
 		default:
 			break;
 	}
 	//if (Time_Count++ > 1000) {
 	//    Time_Count = 0;
-	//    __bic_SR_register_on_exit(LPM0_bits);            // Clear CPUOFF bit from LPM0
+	//    __bic_SR_register_on_exit(LPM0_bits);	// Clear CPUOFF bit from LPM0
 	//}
 }
 
@@ -185,7 +184,7 @@ void __attribute__ ((interrupt(ADC_VECTOR))) ADC_ISR (void)
 		case ADCIV_ADCIFG:
 			ADC_Result = ADCMEM0;
 			irq_events |= 1<<ev_adc;
-			__bic_SR_register_on_exit(LPM0_bits);            // Clear CPUOFF bit from LPM0
+			__bic_SR_register_on_exit(LPM0_bits);	// Clear CPUOFF bit from LPM0
 			break;
 		default:
 			break;
@@ -204,19 +203,19 @@ void __attribute__ ((interrupt(PORT2_VECTOR))) Port_2 (void)
 {
 	if (P2IFG & BIT3) {
 		irq_events |= 1<<ev_btn1;
-		P2IFG &= ~BIT3;                      // Clear P1.3 IFG
+		P2IFG &= ~BIT3;	// Clear P1.3 IFG
 	}
 	if (P2IFG & BIT7) {
 		irq_events |= 1<<ev_btn2;
-		P2IFG &= ~BIT7;                      // Clear P1.3 IFG
+		P2IFG &= ~BIT7;	// Clear P1.3 IFG
 	}
 	if (P2IFG & BIT2) {
 		irq_events |= 1<<ev_pir1;
-		P2IFG &= ~BIT2;                      // Clear P1.4 IFG
+		P2IFG &= ~BIT2;	// Clear P1.4 IFG
 	}
 	if (P2IFG & BIT5) {
 		irq_events |= 1<<ev_pir2;
-		P2IFG &= ~BIT5;                      // Clear P1.7 IFG
+		P2IFG &= ~BIT5;	// Clear P1.7 IFG
 	}
-	__bic_SR_register_on_exit(LPM3_bits);   // Exit LPM3
+	__bic_SR_register_on_exit(LPM3_bits);	// Exit LPM3
 }
