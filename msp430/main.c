@@ -58,10 +58,10 @@ int main(void)
 	{
 		unsigned int events;
 
-		_disable_interrupt();
+		_disable_interrupts();
 		events = irq_events;
 		irq_events = 0;
-		_enable_interrupt();
+		_enable_interrupts();
 
 		// Button 2 or PIR events initiate light measurement and tuns on green led
 		if (events & (1<<ev_btn2|1<<ev_pir1|1<<ev_pir2)) {
@@ -124,7 +124,7 @@ int main(void)
 		__bis_SR_register(LPM0_bits | GIE);
 		__no_operation();
 	}
-	retun 0; /* not reached */
+	return 0; /* not reached */
 }
 
 // TIMER interrupt routine
