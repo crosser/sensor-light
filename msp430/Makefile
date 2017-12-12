@@ -2,9 +2,9 @@
 
 # Must supply TOOLPATH, ARCH, MCU either in local.mk or in the make command line
 # Example (toolchain in the system default location):
-#TOOLPATH := /usr
-#ARCH     := msp430-elf
-#MCU      := msp430fr2433
+#TOOLPATH ?= /usr
+#ARCH     ?= msp430-elf
+#MCU      ?= msp430fr2433
 
 -include local.mk
 
@@ -19,19 +19,17 @@ INC = $(TOOLPATH)/$(ARCH)/include
 LIB = $(TOOLPATH)/$(ARCH)/lib
 CC  = $(BIN)/$(ARCH)-gcc
 OBC = $(BIN)/$(ARCH)-objcopy
-CFLAGS = -mmcu=$(MCU) -g -I $(INC)
-LDFLAGS = -mmcu=$(MCU) -g
+CFLAGS = -mmcu=$(MCU) -g -ffunction-sections -fdata-sections -DDEPRECATED -I $(INC)
+LDFLAGS = -mmcu=$(MCU) -g -Wl,--gc-sections
 
-.SUFFIXES: .elf .hex
-.PRECIOUS: %.o %.elf
+.PRECIOUS: %.o
 
 all: main.hex
 
-%.elf: %.o
-	$(CC) $(LDFLAGS) -o $@ $<
+main: main.o
 
-%.hex: %.elf
+main.hex: main
 	$(OBC) -O ihex $< $@
 
 clean:
-	rm -f *.o *.elf
+	rm -f main *.o
