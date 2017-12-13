@@ -1,4 +1,6 @@
 local.mk
+main
+Log
 *.o
 *.elf
 *.hex

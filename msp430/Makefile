@@ -24,10 +24,10 @@ LDFLAGS = -mmcu=$(MCU) -g -ffunction-sections -fdata-sections -Wl,--gc-sections 
 ifneq (,$(findstring msp430g2,$(MCU)))
   LOAD = mspdebug rf2500 'prog main'
 else
-  LOAD = MSPFlasher -w main.hex
+  LOAD = MSP430Flasher -w main.hex
 endif
 
-.PRECIOUS: %.o
+.PRECIOUS: main %.o
 
 all: main.hex
 
@@ -36,8 +36,8 @@ main: main.o
 main.hex: main
 	$(OBC) -O ihex $< $@
 
-load:
+load: main.hex
 	$(LOAD)
 
 clean:
-	rm -f main *.o
+	rm -f *.o
