@@ -168,7 +168,10 @@ int main(void)
 				}
 			} else
 				continue;
-			TA0CCR2 = 1 << Duty_Cycle;
+			if (Duty_Cycle)
+				TA0CCR2 = 1 << (Duty_Cycle - 1);
+			else
+				TA0CCR2 = 0;
 		}
 		__bis_SR_register(LPM0_bits | GIE);
 		__no_operation();
