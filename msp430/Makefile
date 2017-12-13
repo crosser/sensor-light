@@ -20,7 +20,12 @@ LIB = $(TOOLPATH)/$(ARCH)/lib
 CC  = $(BIN)/$(ARCH)-gcc
 OBC = $(BIN)/$(ARCH)-objcopy
 CFLAGS = -mmcu=$(MCU) -g -ffunction-sections -fdata-sections -DDEPRECATED -I $(INC)
-LDFLAGS = -mmcu=$(MCU) -g -Wl,--gc-sections
+LDFLAGS = -mmcu=$(MCU) -g -ffunction-sections -fdata-sections -Wl,--gc-sections -L $(INC)
+ifneq (,$(findstring msp430g2,$(MCU)))
+  LOAD = mspdebug rf2500 'prog main'
+else
+  LOAD = MSPFlasher -w main.hex
+endif
 
 .PRECIOUS: %.o
 
@@ -30,6 +35,9 @@ main: main.o
 
 main.hex: main
 	$(OBC) -O ihex $< $@
+
+load:
+	$(LOAD)
 
 clean:
 	rm -f main *.o
