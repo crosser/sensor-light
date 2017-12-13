@@ -45,15 +45,20 @@ int main(void)
 	P2IES &= ~(BIT4|BIT5);		// INT on Lo->Hi edge
 	P2IE  |= BIT4|BIT5;		// INT enable
 
-	// Configure ADC A7 pin
-	SYSCFG2 |= ADCPCTL7;
-
 	// Configure ADC10
+
+#ifdef ADCPCTL4 /* Newer model */
+	SYSCFG2 |= ADCPCTL4|ADCPCTL5;	// disconnect pin 4 and 5 from GPIO
 	ADCCTL0 |= ADCSHT_2 | ADCON;	// ADCON, S&H=16 ADC clks
 	ADCCTL1 |= ADCSHP;		// ADCCLK = MODOSC; sampling timer
 	ADCCTL2 |= ADCRES;		// 10-bit conversion results
-	ADCMCTL0 |= ADCINCH_7;		// A7 ADC input select; Vref=AVCC
+	ADCMCTL0 |= ADCINCH_4;		// A4 ADC input select; Vref=AVCC
 	ADCIE |= ADCIE0;		// Enable ADC conv complete interrupt
+	// channel 5 is unused, reserved for measuring current
+#else
+# error older mode ADC unimplemented
+	// channel 5 is unused, reserved for measuring current
+#endif
 
 	// Configure timer A0 for PWM
 	TA0CCR0 = 10000-1;		// PWM Period
@@ -84,12 +89,14 @@ int main(void)
 				continue;
 			}
 			ADCCTL0 |= ADCENC | ADCSC;	// Sampling and conversion start
-			P1OUT |= BIT1;	// Set P1.1 LED on
+			// ADC10CTL0 |= ENC + ADC10SC;	// Sampling and conversion start
+			P1OUT |= BIT_GL;	// Set green LED on
 		}
 
-		// End of light measurement, set new Duty_Cycle and zero increment and tuns off green led
+		// End of light measurement,
+		// set new Duty_Cycle and zero increment and turn off green led
 		if (events & 1<<ev_adc) {
-			P1OUT &= ~BIT1;	// Clear P1.1 LED off
+			P1OUT &= ~BIT_GL;	// Clear green LED off
 			if (Time_Left)
 				continue;
 			if (ADC_Result < 200)
@@ -113,7 +120,7 @@ int main(void)
 		if (events & 1<<ev_tmr) {
 			if (Time_Count++ > 10) {
 				Time_Count = 0;
-				P1OUT ^= BIT0;
+				P1OUT ^= BIT_RL; // blink
 				if (Time_Left)
 					Time_Left--;
 				else if (Duty_Cycle > 1)
@@ -161,15 +168,11 @@ void __attribute__ ((interrupt(TIMER1_A1_VECTOR))) Timer_A (void)
 			break;	// CCR2 not used
 		case TA1IV_TAIFG:
 			irq_events |= 1<<ev_tmr;
-			__bic_SR_register_on_exit(LPM0_bits);	// Clear CPUOFF bit from LPM0
+			__bic_SR_register_on_exit(LPM0_bits);	// Wake up
 			break;
 		default:
 			break;
 	}
-	//if (Time_Count++ > 1000) {
-	//    Time_Count = 0;
-	//    __bic_SR_register_on_exit(LPM0_bits);	// Clear CPUOFF bit from LPM0
-	//}
 }
 
 // ADC interrupt service routine
@@ -199,7 +202,7 @@ void __attribute__ ((interrupt(ADC_VECTOR))) ADC_ISR (void)
 		case ADCIV_ADCIFG:
 			ADC_Result = ADCMEM0;
 			irq_events |= 1<<ev_adc;
-			__bic_SR_register_on_exit(LPM0_bits);	// Clear CPUOFF bit from LPM0
+			__bic_SR_register_on_exit(LPM0_bits);	// Wake up
 			break;
 		default:
 			break;
@@ -216,21 +219,23 @@ void __attribute__ ((interrupt(PORT2_VECTOR))) Port_2 (void)
 #error Compiler not supported!
 #endif
 {
-	if (P2IFG & BIT3) {
+	if (PBTN(IFG) & BIT_BTN) {
 		irq_events |= 1<<ev_btn1;
-		P2IFG &= ~BIT3;	// Clear P1.3 IFG
+		PBTN(IFG) &= ~BIT_BTN;	// Clear button IFG
 	}
-	if (P2IFG & BIT7) {
+#ifdef HAVE_BTN2
+	if (PBTN(IFG) & BIT_BTN2) {
 		irq_events |= 1<<ev_btn2;
-		P2IFG &= ~BIT7;	// Clear P1.3 IFG
+		PBTN(IFG) &= ~BIT_BTN2;	// Clear button 2 IFG
 	}
-	if (P2IFG & BIT2) {
+#endif
+	if (P2IFG & BIT4) {
 		irq_events |= 1<<ev_pir1;
-		P2IFG &= ~BIT2;	// Clear P1.4 IFG
+		P2IFG &= ~BIT4;	// Clear P2.4 IFG
 	}
 	if (P2IFG & BIT5) {
 		irq_events |= 1<<ev_pir2;
-		P2IFG &= ~BIT5;	// Clear P1.7 IFG
+		P2IFG &= ~BIT5;	// Clear P2.5 IFG
 	}
-	__bic_SR_register_on_exit(LPM3_bits);	// Exit LPM3
+	__bic_SR_register_on_exit(LPM0_bits);	// Wake up
 }
