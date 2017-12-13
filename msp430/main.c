@@ -4,6 +4,21 @@ static volatile unsigned int ADC_Result;
 static volatile unsigned int irq_events = 0;
 enum {ev_btn1 = 0, ev_btn2, ev_pir1, ev_pir2, ev_tmr, ev_adc, ev_MAX};
 
+#ifdef ADCSC /* Let us hope that this is a "new" model */
+# define BIT_RL BIT0
+# define BIT_GL BIT1
+# define PBTN(x) P2##x
+# define BIT_BTN BIT3
+# define HAVE_BTN2
+# define BIT_BTN2 BIT7
+#else
+# define BIT_RL BIT0
+# define BIT_GL BIT6
+# define PBTN(x) P1##x
+# define BIT_BTN BIT3
+# define BIT_BTN2 0
+#endif
+
 int main(void)
 {
 	int Duty_Cycle = 1;
@@ -13,22 +28,22 @@ int main(void)
 
 	WDTCTL = WDTPW | WDTHOLD;	// stop watchdog timer
 	// Configure GPIO Out
-	P1DIR |= BIT0|BIT1|BIT2;	// Set LEDs & PWM to output direction
-	P1OUT &= ~(BIT0|BIT1);		// P1.0&1 LEDs off
-	P1SEL1 |= BIT2;			// P1.2 PWM out
+	P1DIR |= BIT_RL|BIT_GL|BIT7;	// Set LEDs & PWM to output direction
+	P1OUT &= ~(BIT_RL|BIT_GL);	// LEDs off
+	P1SEL1 |= BIT7;			// PWM out
 
 	// Configure GPIO In
-	P2DIR &= ~(BIT3|BIT7);		// Buttons
-	P2OUT |= BIT3|BIT7;		// Pull up
-	P2REN |= BIT3|BIT7;		// Enable pull-up
-	P2IES |= BIT3|BIT7;		// INT on Hi->Lo edge
-	P2IE  |= BIT3|BIT7;		// INT enable
+	PBTN(DIR) &= ~(BIT_BTN|BIT_BTN2);	// Buttons
+	PBTN(OUT) |= BIT_BTN|BIT_BTN2;		// Pull up
+	PBTN(REN) |= BIT_BTN|BIT_BTN2;		// Enable pull-up
+	PBTN(IES) |= BIT_BTN|BIT_BTN2;		// INT on Hi->Lo edge
+	PBTN(IE)  |= BIT_BTN|BIT_BTN2;		// INT enable
 
-	P2DIR &= ~(BIT2|BIT5);		// PIR Sensors
-	P2OUT &= ~(BIT2|BIT5);		// Pull down
-	P2REN |= BIT2|BIT5;		// Enable pull-down
-	P2IES &= ~(BIT2|BIT5);		// INT on Lo->Hi edge
-	P2IE  |= BIT2|BIT5;		// INT enable
+	P2DIR &= ~(BIT4|BIT5);		// PIR Sensors
+	P2OUT &= ~(BIT4|BIT5);		// Pull down
+	P2REN |= BIT4|BIT5;		// Enable pull-down
+	P2IES &= ~(BIT4|BIT5);		// INT on Lo->Hi edge
+	P2IE  |= BIT4|BIT5;		// INT enable
 
 	// Configure ADC A7 pin
 	SYSCFG2 |= ADCPCTL7;
