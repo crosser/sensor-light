@@ -4,6 +4,11 @@ static volatile unsigned int ADC_Result;
 static volatile unsigned int irq_events = 0;
 enum {ev_btn1 = 0, ev_btn2, ev_pir1, ev_pir2, ev_tmr, ev_adc, ev_MAX};
 
+#define PWM_ORDER 10
+#define PWM_HALF 5
+#define LIGHT_THRESHOLD 200
+#define TIME_ON 16
+	
 #ifdef ADCSC /* Let us hope that this is a "new" model */
 # define BIT_RL BIT0
 # define BIT_GL BIT1
@@ -21,19 +26,19 @@ enum {ev_btn1 = 0, ev_btn2, ev_pir1, ev_pir2, ev_tmr, ev_adc, ev_MAX};
 
 int main(void)
 {
-	int Duty_Cycle = 1;
+	int Duty_Cycle = 0;
 	int Increment = 1;
 	unsigned int Time_Count = 0;
 	unsigned int Time_Left = 5;
 
 	WDTCTL = WDTPW | WDTHOLD;	// stop watchdog timer
 	// Configure GPIO Out
-	P1DIR |= BIT_RL|BIT_GL|BIT7;	// Set LEDs & PWM to output direction
+	P1DIR |= BIT_RL|BIT_GL|BIT2;	// Set LEDs & PWM to output direction
 	P1OUT &= ~(BIT_RL|BIT_GL);	// LEDs off
 #ifdef P1SEL1
-	P1SEL1 |= BIT7;			// PWM out
+	P1SEL1 |= BIT2;			// PWM out
 #else
-	P1SEL |= BIT7;			// PWM out
+	P1SEL |= BIT2;			// PWM out
 #endif
 
 	// Configure GPIO In
@@ -65,23 +70,22 @@ int main(void)
 	// channel 5 is unused, reserved for measuring current
 #endif
 
-	// Timer and ADC
+	// Timer and PWM
 
 #ifndef TASSEL__SMCLK
 # define TASSEL__SMCLK TASSEL_2
-#endif
-#ifndef MC__UP
 # define MC__UP MC_1
-#endif
-#ifndef MC__CONTINUOUS
 # define MC__CONTINUOUS MC_2
+# define TA0CCR2 TA0CCR1
+# define TA0CCTL2 TA0CCTL1
 #endif
 
 	// Configure timer A0 for PWM
-	TA0CCR0 = 10000-1;		// PWM Period
-	TA0CCTL2 = OUTMOD_7;		// CCR2 reset/set
-	TA0CCR2 = 500;			// CCR2 PWM duty cycle
-	TA0CTL = TASSEL__SMCLK | MC__UP | TACLR;// SMCLK, up mode, clear TAR
+	TA0CCR0 = 1 << PWM_ORDER;	// PWM Period 2^10 ca. 1 kHz
+	TA0CCR2 = 0;			// CCR1 PWM duty cycle
+	TA0CCTL2 = OUTMOD_7;		// CCR1 reset/set
+	TA0CTL = TASSEL__SMCLK | MC__UP | TACLR;// SMCLK, up mode
+		// SMCLK, no divider, up mode, no interrupt, clear TAR
 
 	//Configure timer A1 for counting time
 	TA1CTL |= TASSEL__SMCLK | MC__CONTINUOUS | TACLR | TAIE;
@@ -102,69 +106,69 @@ int main(void)
 		irq_events = 0;
 		_enable_interrupts();
 
-		// Button 2 or PIR events initiate light measurement and tuns on green led
+		// Button 2 or PIR events initiate light measurement
+		// and tuns on green led
 		if (events & (1<<ev_btn2|1<<ev_pir1|1<<ev_pir2)) {
-			if (Duty_Cycle > 1) {
-				Time_Left = 15;
+			if (Duty_Cycle > 0) {
+				Time_Left = TIME_ON;
 				continue;
 			}
+			P1OUT |= BIT_GL;	// Set green LED on
 			// Sampling and conversion start
 #ifdef ADCENC
 			ADCCTL0 |= ADCENC | ADCSC;
 #else
 			ADC10CTL0 |= ENC + ADC10SC;
 #endif
-			P1OUT |= BIT_GL;	// Set green LED on
 		}
 
-		// End of light measurement,
-		// set new Duty_Cycle and zero increment and turn off green led
+		// End of light measurement. Set new Duty_Cycle,
+		// zero increment and turn off green led
 		if (events & 1<<ev_adc) {
 			P1OUT &= ~BIT_GL;	// Clear green LED off
 			if (Time_Left)
 				continue;
-			if (ADC_Result < 200)
+			if (ADC_Result < LIGHT_THRESHOLD)
 				continue;
-			Time_Left = 15;
+			Time_Left = TIME_ON;
 			Increment = 1;
 		}
 
 		// Button 1 sets non-zero increment (and toggles it)
 		if (events & 1<<ev_btn1) {
-			if (Duty_Cycle > 5000) {
+			if (Duty_Cycle > PWM_HALF) {
 				Time_Left = 0;
 				Increment = -1;
 			} else {
-				Time_Left = 15;
+				Time_Left = TIME_ON;
 				Increment = 1;
 			}
 		}
 
 		// Timer event (100 ms) changed duty cycle and flashes red led
 		if (events & 1<<ev_tmr) {
-			if (Time_Count++ > 10) {
+			if (Time_Count++ > 20) {
 				Time_Count = 0;
-				P1OUT ^= BIT_RL; // blink
+				P1OUT |= BIT_RL; // red LED on
 				if (Time_Left)
 					Time_Left--;
 				else if (Duty_Cycle > 1)
 					Increment = -1;
-			}
-			if (Increment == 0)
+			} else if (Time_Count == 1)
+				P1OUT &= ~BIT_RL; // red LED off
+			if (Increment > 0) {
+				if (++Duty_Cycle >= PWM_ORDER) {
+					Duty_Cycle = PWM_ORDER;
+					Increment = 0;
+				}
+			} else if (Increment < 0) {
+				if (--Duty_Cycle < 1) {
+					Duty_Cycle = 0;
+					Increment = 0;
+				}
+			} else
 				continue;
-			else if (Increment > 0)
-				Duty_Cycle *= 2;
-			else if (Increment < 0)
-				Duty_Cycle /= 2;
-			if (Duty_Cycle < 1) {
-				Duty_Cycle = 1;
-				Increment = 0;
-			}
-			if (Duty_Cycle > (10000-1)) {
-				Duty_Cycle = 10000-1;
-				Increment = 0;
-			}
-			TA0CCR2 = Duty_Cycle;
+			TA0CCR2 = 1 << Duty_Cycle;
 		}
 		__bis_SR_register(LPM0_bits | GIE);
 		__no_operation();
@@ -252,6 +256,28 @@ void __attribute__ ((interrupt(PORT2_VECTOR))) Port_2 (void)
 #error Compiler not supported!
 #endif
 {
+	if (P2IFG & BIT4) {
+		irq_events |= 1<<ev_pir1;
+		P2IFG &= ~BIT4;	// Clear P2.4 IFG
+	}
+	if (P2IFG & BIT5) {
+		irq_events |= 1<<ev_pir2;
+		P2IFG &= ~BIT5;	// Clear P2.5 IFG
+	}
+#if (PBTN() == P1)
+	__bic_SR_register_on_exit(LPM0_bits);	// Wake up
+}
+// GPIO interrupt service routine
+#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
+#pragma vector=PORT1_VECTOR
+__interrupt void Port_1(void)
+#elif defined(__GNUC__)
+void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
+#else
+#error Compiler not supported!
+#endif
+{
+#endif /* (PBTN() == P1) */
 	if (PBTN(IFG) & BIT_BTN) {
 		irq_events |= 1<<ev_btn1;
 		PBTN(IFG) &= ~BIT_BTN;	// Clear button IFG
@@ -262,13 +288,5 @@ void __attribute__ ((interrupt(PORT2_VECTOR))) Port_2 (void)
 		PBTN(IFG) &= ~BIT_BTN2;	// Clear button 2 IFG
 	}
 #endif
-	if (P2IFG & BIT4) {
-		irq_events |= 1<<ev_pir1;
-		P2IFG &= ~BIT4;	// Clear P2.4 IFG
-	}
-	if (P2IFG & BIT5) {
-		irq_events |= 1<<ev_pir2;
-		P2IFG &= ~BIT5;	// Clear P2.5 IFG
-	}
 	__bic_SR_register_on_exit(LPM0_bits);	// Wake up
 }

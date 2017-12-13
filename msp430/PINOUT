@@ -3,12 +3,12 @@
 
 P1.0	RED LED		RED LED
 P1.1	(UART)		GREEN LED
-P1.2	(UART)
+P1.2	<<PWM>>		<<PWM>>
 P1.3	SW2
 P1.4	<<ADC1>>	<<ADC1>>
 P1.5	<<ADC2>>	<<ADC2>>
 P1.6	GREEN LED
-P1.7	<<PWM>>		<<PWM>>
+P1.7
 
 P2.0			(XOUT)
 P2.1			(XIN)
