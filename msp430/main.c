@@ -30,7 +30,11 @@ int main(void)
 	// Configure GPIO Out
 	P1DIR |= BIT_RL|BIT_GL|BIT7;	// Set LEDs & PWM to output direction
 	P1OUT &= ~(BIT_RL|BIT_GL);	// LEDs off
+#ifdef P1SEL1
 	P1SEL1 |= BIT7;			// PWM out
+#else
+	P1SEL |= BIT7;			// PWM out
+#endif
 
 	// Configure GPIO In
 	PBTN(DIR) &= ~(BIT_BTN|BIT_BTN2);	// Buttons
@@ -56,22 +60,38 @@ int main(void)
 	ADCIE |= ADCIE0;		// Enable ADC conv complete interrupt
 	// channel 5 is unused, reserved for measuring current
 #else
-# error older mode ADC unimplemented
+	ADC10CTL0 = ADC10SHT_2 + ADC10ON + ADC10IE; // ADCON, S&H=16 ADC clks
+	ADC10CTL1 = INCH_4;		// A4 ADC input select
 	// channel 5 is unused, reserved for measuring current
+#endif
+
+	// Timer and ADC
+
+#ifndef TASSEL__SMCLK
+# define TASSEL__SMCLK TASSEL_2
+#endif
+#ifndef MC__UP
+# define MC__UP MC_1
+#endif
+#ifndef MC__CONTINUOUS
+# define MC__CONTINUOUS MC_2
 #endif
 
 	// Configure timer A0 for PWM
 	TA0CCR0 = 10000-1;		// PWM Period
 	TA0CCTL2 = OUTMOD_7;		// CCR2 reset/set
 	TA0CCR2 = 500;			// CCR2 PWM duty cycle
-	TA0CTL = TASSEL__SMCLK | MC__UP | TACLR;	// SMCLK, up mode, clear TAR
+	TA0CTL = TASSEL__SMCLK | MC__UP | TACLR;// SMCLK, up mode, clear TAR
 
 	//Configure timer A1 for counting time
-	TA1CTL |= TASSEL__SMCLK | MC__CONTINUOUS | TACLR | TAIE;	// SMCLK, no divider, continuous mode
+	TA1CTL |= TASSEL__SMCLK | MC__CONTINUOUS | TACLR | TAIE;
+		// SMCLK, no divider, continuous mode, interrupt enable
 
+#ifdef LOCKLPM5
 	// Disable the GPIO power-on default high-impedance mode to activate
 	// previously configured port settings
 	PM5CTL0 &= ~LOCKLPM5;
+#endif
 
 	while(1)
 	{
@@ -88,8 +108,12 @@ int main(void)
 				Time_Left = 15;
 				continue;
 			}
-			ADCCTL0 |= ADCENC | ADCSC;	// Sampling and conversion start
-			// ADC10CTL0 |= ENC + ADC10SC;	// Sampling and conversion start
+			// Sampling and conversion start
+#ifdef ADCENC
+			ADCCTL0 |= ADCENC | ADCSC;
+#else
+			ADC10CTL0 |= ENC + ADC10SC;
+#endif
 			P1OUT |= BIT_GL;	// Set green LED on
 		}
 
@@ -175,6 +199,11 @@ void __attribute__ ((interrupt(TIMER1_A1_VECTOR))) Timer_A (void)
 	}
 }
 
+#ifndef ADC_VECTOR
+# define ADCMEM0 ADC10MEM
+# define ADC_VECTOR ADC10_VECTOR
+#endif
+
 // ADC interrupt service routine
 #if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
 #pragma vector=ADC_VECTOR
@@ -185,6 +214,7 @@ void __attribute__ ((interrupt(ADC_VECTOR))) ADC_ISR (void)
 #error Compiler not supported!
 #endif
 {
+#ifdef ADCIV_NONE
 	switch(__even_in_range(ADCIV,ADCIV_ADCIFG))
 	{
 		case ADCIV_NONE:
@@ -200,13 +230,16 @@ void __attribute__ ((interrupt(ADC_VECTOR))) ADC_ISR (void)
 		case ADCIV_ADCINIFG:
 			break;
 		case ADCIV_ADCIFG:
+#endif
 			ADC_Result = ADCMEM0;
 			irq_events |= 1<<ev_adc;
 			__bic_SR_register_on_exit(LPM0_bits);	// Wake up
+#ifdef ADCIV_NONE
 			break;
 		default:
 			break;
 	}
+#endif
 }
 
 // GPIO interrupt service routine
