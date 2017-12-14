@@ -1,4 +1,4 @@
-= LED strip light controller =
+## LED strip light controller ##
 
 The project is to drive night lighting of a staircase using PIR
 motion sensors (two: for the top and bottom of the staircase).
