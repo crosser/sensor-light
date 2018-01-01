@@ -5,4 +5,5 @@ Log
 *.elf
 *.hex
 *.bak
+*-bak
 *.net
