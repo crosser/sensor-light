@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>/home/crosser/src/sensor-light/hardware/sensor-light/sensor-light.sch</source>
+    <date>Mon 01 Jan 2018 21:11:24 CET</date>
+    <tool>Eeschema 4.0.6+dfsg1-1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>sensor-light.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="U2">
+      <value>MSP430G2553IN20</value>
+      <footprint>Housings_DIP:DIP-20_W7.62mm_Socket</footprint>
+      <libsource lib="msp430" part="MSP430G2553IN20"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A4A4B70</tstamp>
+    </comp>
+    <comp ref="C1">
+      <value>10uF</value>
+      <footprint>Capacitors_THT:CP_Radial_D4.0mm_P2.00mm</footprint>
+      <libsource lib="device" part="CP"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A4A4C0F</tstamp>
+    </comp>
+    <comp ref="R2">
+      <value>100 KOhm</value>
+      <footprint>Resistors_SMD:R_1218_HandSoldering</footprint>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A4A4D3B</tstamp>
+    </comp>
+    <comp ref="R1">
+      <value>27 Ohm</value>
+      <footprint>Resistors_SMD:R_1218_HandSoldering</footprint>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A4A4DD8</tstamp>
+    </comp>
+    <comp ref="J1">
+      <value>Power IN 12V</value>
+      <footprint>Socket_Strips:Socket_Strip_Straight_1x02_Pitch2.54mm</footprint>
+      <libsource lib="conn" part="CONN_01X02_MALE"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A4A4E4F</tstamp>
+    </comp>
+    <comp ref="J6">
+      <value>PWM Power OUT 12V</value>
+      <footprint>Socket_Strips:Socket_Strip_Straight_1x02_Pitch2.54mm</footprint>
+      <libsource lib="conn" part="CONN_01X02_FEMALE"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A4A4EAE</tstamp>
+    </comp>
+    <comp ref="Q1">
+      <value>IRLML2502</value>
+      <footprint>TO_SOT_Packages_SMD:SOT-23_Handsoldering</footprint>
+      <libsource lib="device" part="Q_NMOS_DGS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A4A4F0F</tstamp>
+    </comp>
+    <comp ref="U1">
+      <value>Reg 3.3V</value>
+      <footprint>TO_SOT_Packages_SMD:SOT-223</footprint>
+      <libsource lib="regul" part="LD1117S33TR"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A4A4F7A</tstamp>
+    </comp>
+    <comp ref="J5">
+      <value>Light Sensor</value>
+      <footprint>Socket_Strips:Socket_Strip_Straight_1x03_Pitch2.54mm</footprint>
+      <libsource lib="conn" part="CONN_01X03_MALE"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A4A4FE3</tstamp>
+    </comp>
+    <comp ref="J3">
+      <value>PIR Sensor 1</value>
+      <footprint>Socket_Strips:Socket_Strip_Straight_1x03_Pitch2.54mm</footprint>
+      <libsource lib="conn" part="CONN_01X03_MALE"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A4A5096</tstamp>
+    </comp>
+    <comp ref="J2">
+      <value>PIR Sensor 2</value>
+      <footprint>Socket_Strips:Socket_Strip_Straight_1x03_Pitch2.54mm</footprint>
+      <libsource lib="conn" part="CONN_01X03_MALE"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A4A5117</tstamp>
+    </comp>
+    <comp ref="SW1">
+      <value>Manual ON/OFF</value>
+      <footprint>Buttons_Switches_THT:SW_PUSH_SMALL</footprint>
+      <libsource lib="switches" part="SW_DIP_x01"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A4A528A</tstamp>
+    </comp>
+    <comp ref="D2">
+      <value>Green</value>
+      <footprint>LEDs:LED_CREE-XQ_HandSoldering</footprint>
+      <libsource lib="device" part="LED"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A4A52F3</tstamp>
+    </comp>
+    <comp ref="D1">
+      <value>Red</value>
+      <footprint>LEDs:LED_CREE-XQ_HandSoldering</footprint>
+      <libsource lib="device" part="LED"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A4A535C</tstamp>
+    </comp>
+    <comp ref="J4">
+      <value>PROG Header</value>
+      <footprint>Socket_Strips:Socket_Strip_Straight_1x04_Pitch2.54mm</footprint>
+      <libsource lib="conn" part="CONN_01X04_MALE"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A4A5801</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="conn" part="CONN_01X02_FEMALE">
+      <description>Generic Female Connector, Single Row, 01x02, socket header</description>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">CONN_01X02_FEMALE</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="conn" part="CONN_01X02_MALE">
+      <description>Generic Male Connector, single row, 01x02, pin header</description>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">CONN_01X02_MALE</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="power_out"/>
+        <pin num="2" name="2" type="power_out"/>
+      </pins>
+    </libpart>
+    <libpart lib="conn" part="CONN_01X03_MALE">
+      <description>Generic Male Connector, single row, 01x03, pin header</description>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">CONN_01X03_MALE</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+        <pin num="3" name="3" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="conn" part="CONN_01X04_MALE">
+      <description>Generic Male Connector, single row, 01x04, pin header</description>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">CONN_01X04_MALE</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+        <pin num="3" name="3" type="passive"/>
+        <pin num="4" name="4" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="CP">
+      <description>Polarised capacitor</description>
+      <footprints>
+        <fp>CP_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">CP</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="regul" part="LD1117S33TR">
+      <aliases>
+        <alias>LD1117S33CTR</alias>
+        <alias>LD1117S12TR</alias>
+        <alias>LD1117S12CTR</alias>
+        <alias>LD1117S18TR</alias>
+        <alias>LD1117S18CTR</alias>
+        <alias>LD1117S25TR</alias>
+        <alias>LD1117S25CTR</alias>
+        <alias>LD1117S50TR</alias>
+        <alias>LD1117S50CTR</alias>
+      </aliases>
+      <description>800mA Fixed Low Drop Positive Voltage Regulator, Fixed Output 3.3V, SOT223</description>
+      <docs>http://www.st.com/st-web-ui/static/active/en/resource/technical/document/datasheet/CD00000544.pdf</docs>
+      <footprints>
+        <fp>SOT223</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">LD1117S33TR</field>
+        <field name="Footprint">TO_SOT_Packages_SMD:SOT-223</field>
+      </fields>
+      <pins>
+        <pin num="1" name="GND" type="power_in"/>
+        <pin num="2" name="VO" type="power_out"/>
+        <pin num="3" name="VI" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="LED">
+      <description>LED generic</description>
+      <footprints>
+        <fp>LED*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">LED</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="msp430" part="MSP430G2153IN20">
+      <aliases>
+        <alias>MSP430G2253IN20</alias>
+        <alias>MSP430G2353IN20</alias>
+        <alias>MSP430G2453IN20</alias>
+        <alias>MSP430G2553IN20</alias>
+      </aliases>
+      <description>MSP430G2113, 20pin PDIP, 1KB Flash Memory, 256B RAM</description>
+      <docs>http://www.ti.com/lit/ds/symlink/msp430g2553.pdf</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">MSP430G2153IN20</field>
+        <field name="Footprint">20N</field>
+      </fields>
+      <pins>
+        <pin num="1" name="DVCC" type="power_in"/>
+        <pin num="2" name="TA0CLK/ACLK/CA0/A0/P1.0" type="BiDi"/>
+        <pin num="3" name="UCA0RXD/UCA0SOMI/TA0.0/CA1/A1/P1.1" type="BiDi"/>
+        <pin num="4" name="UCA0TXD/UCA0SIMO/TA0.1/CA2/A2/P1.2" type="BiDi"/>
+        <pin num="5" name="CAOUT/VREF-/VeREF-/CA3/A3/P1.3" type="BiDi"/>
+        <pin num="6" name="TCK/SMCLK/UCB0STE/UCA0CLK/VREF+/VeREF+/CA4/A4/P1.4" type="BiDi"/>
+        <pin num="7" name="TMS/UCB0CLK/UCA0STE/TA0.0/CA5/A5/P1.5" type="BiDi"/>
+        <pin num="8" name="P2.0/TA1.0" type="BiDi"/>
+        <pin num="9" name="P2.1/TA1.1" type="BiDi"/>
+        <pin num="10" name="P2.2/TA1.1" type="BiDi"/>
+        <pin num="11" name="P2.3/TA1.0" type="BiDi"/>
+        <pin num="12" name="P2.4/TA1.2" type="BiDi"/>
+        <pin num="13" name="P2.5/TA1.2" type="BiDi"/>
+        <pin num="14" name="TDI/TCLK/UCB0SOMI/UCB0SCL/TA0.1/CA6/A6/P1.6" type="BiDi"/>
+        <pin num="15" name="TDO/TDI/UCB0SIMO/UCB0SDA/CAOUT/CA7/A7/P1.7" type="BiDi"/>
+        <pin num="16" name="~RST~/NMI/SBWTDIO" type="input"/>
+        <pin num="17" name="TEST/SBWTCK" type="input"/>
+        <pin num="18" name="P2.7/XOUT" type="BiDi"/>
+        <pin num="19" name="P2.6/XIN/TA0.1" type="BiDi"/>
+        <pin num="20" name="DVSS" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="Q_NMOS_DGS">
+      <description>Transistor N-MOSFET (general)</description>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">Q_NMOS_DGS</field>
+      </fields>
+      <pins>
+        <pin num="1" name="D" type="passive"/>
+        <pin num="2" name="G" type="input"/>
+        <pin num="3" name="S" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="R">
+      <description>Resistor</description>
+      <footprints>
+        <fp>R_*</fp>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="switches" part="SW_DIP_x01">
+      <description>1x DIP Switch, Single Pole Single Throw (SPST) switch, small symbol</description>
+      <footprints>
+        <fp>SW?DIP?x1*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">SW</field>
+        <field name="Value">SW_DIP_x01</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="input"/>
+        <pin num="2" name="~" type="input"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="device">
+      <uri>/usr/share/kicad/library/device.lib</uri>
+    </library>
+    <library logical="regul">
+      <uri>/usr/share/kicad/library/regul.lib</uri>
+    </library>
+    <library logical="msp430">
+      <uri>/usr/share/kicad/library/msp430.lib</uri>
+    </library>
+    <library logical="switches">
+      <uri>/usr/share/kicad/library/switches.lib</uri>
+    </library>
+    <library logical="conn">
+      <uri>/usr/share/kicad/library/conn.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="Net-(R1-Pad2)">
+      <node ref="U2" pin="4"/>
+      <node ref="R1" pin="2"/>
+    </net>
+    <net code="2" name="Net-(J2-Pad2)">
+      <node ref="U2" pin="13"/>
+      <node ref="J2" pin="2"/>
+    </net>
+    <net code="3" name="Net-(J3-Pad2)">
+      <node ref="U2" pin="12"/>
+      <node ref="J3" pin="2"/>
+    </net>
+    <net code="4" name="Net-(SW1-Pad1)">
+      <node ref="SW1" pin="1"/>
+      <node ref="U2" pin="5"/>
+    </net>
+    <net code="5" name="Net-(Q1-Pad2)">
+      <node ref="R1" pin="1"/>
+      <node ref="Q1" pin="2"/>
+      <node ref="R2" pin="1"/>
+    </net>
+    <net code="6" name="Net-(J5-Pad2)">
+      <node ref="J5" pin="2"/>
+      <node ref="U2" pin="6"/>
+    </net>
+    <net code="7" name="Net-(J6-Pad2)">
+      <node ref="J6" pin="2"/>
+      <node ref="Q1" pin="1"/>
+    </net>
+    <net code="8" name="Net-(J4-Pad3)">
+      <node ref="J4" pin="3"/>
+      <node ref="U2" pin="16"/>
+    </net>
+    <net code="9" name="Net-(U2-Pad18)">
+      <node ref="U2" pin="18"/>
+    </net>
+    <net code="10" name="Net-(U2-Pad19)">
+      <node ref="U2" pin="19"/>
+    </net>
+    <net code="11" name="Net-(U2-Pad11)">
+      <node ref="U2" pin="11"/>
+    </net>
+    <net code="12" name="Net-(U2-Pad10)">
+      <node ref="U2" pin="10"/>
+    </net>
+    <net code="13" name="Net-(U2-Pad9)">
+      <node ref="U2" pin="9"/>
+    </net>
+    <net code="14" name="Net-(U2-Pad8)">
+      <node ref="U2" pin="8"/>
+    </net>
+    <net code="15" name="Net-(U2-Pad15)">
+      <node ref="U2" pin="15"/>
+    </net>
+    <net code="16" name="Net-(U2-Pad7)">
+      <node ref="U2" pin="7"/>
+    </net>
+    <net code="17" name="Net-(U2-Pad3)">
+      <node ref="U2" pin="3"/>
+    </net>
+    <net code="18" name="Net-(J4-Pad2)">
+      <node ref="J4" pin="2"/>
+      <node ref="U2" pin="17"/>
+    </net>
+    <net code="19" name="Net-(C1-Pad1)">
+      <node ref="C1" pin="1"/>
+      <node ref="J4" pin="1"/>
+      <node ref="J2" pin="1"/>
+      <node ref="J3" pin="1"/>
+      <node ref="J5" pin="3"/>
+      <node ref="U2" pin="1"/>
+      <node ref="U1" pin="2"/>
+    </net>
+    <net code="20" name="Net-(D2-Pad2)">
+      <node ref="U2" pin="2"/>
+      <node ref="D2" pin="2"/>
+    </net>
+    <net code="21" name="Net-(D1-Pad2)">
+      <node ref="U2" pin="14"/>
+      <node ref="D1" pin="2"/>
+    </net>
+    <net code="22" name="Net-(C1-Pad2)">
+      <node ref="SW1" pin="2"/>
+      <node ref="J2" pin="3"/>
+      <node ref="J3" pin="3"/>
+      <node ref="D2" pin="1"/>
+      <node ref="U1" pin="1"/>
+      <node ref="J5" pin="1"/>
+      <node ref="D1" pin="1"/>
+      <node ref="J4" pin="4"/>
+      <node ref="J1" pin="2"/>
+      <node ref="R2" pin="2"/>
+      <node ref="C1" pin="2"/>
+      <node ref="Q1" pin="3"/>
+      <node ref="U2" pin="20"/>
+    </net>
+    <net code="23" name="Net-(J1-Pad1)">
+      <node ref="J6" pin="1"/>
+      <node ref="J1" pin="1"/>
+      <node ref="U1" pin="3"/>
+    </net>
+  </nets>
+</export>
