@@ -24,6 +24,14 @@ enum {ev_btn1 = 0, ev_btn2, ev_pir1, ev_pir2, ev_tmr, ev_adc, ev_MAX};
 # define BIT_BTN2 0
 #endif
 
+static int expon2(int duty)
+{
+	int shift = duty>>1;
+	int comp = 1<<shift;
+	int extra = (duty & 1) ? comp>>1 : 0;
+	return (duty ? comp|extra : 0);
+}
+
 int main(void)
 {
 	int Duty_Cycle = 0;
@@ -153,7 +161,7 @@ int main(void)
 				if (!Time_Indicate)
 					P1OUT &= ~(BIT_RL|BIT_GL); // LEDs off
 			}
-			if (Time_Count++ > 20) {
+			if (Time_Count++ > 10) {
 				Time_Count = 0;
 				if (Time_Left)
 					Time_Left--;
@@ -161,8 +169,8 @@ int main(void)
 					Increment = -1;
 			}
 			if (Increment > 0) {
-				if (++Duty_Cycle >= PWM_ORDER) {
-					Duty_Cycle = PWM_ORDER;
+				if (++Duty_Cycle >= (PWM_ORDER<<1)) {
+					Duty_Cycle = PWM_ORDER<<1;
 					Increment = 0;
 				}
 			} else if (Increment < 0) {
@@ -172,10 +180,8 @@ int main(void)
 				}
 			} else
 				continue;
-			if (Duty_Cycle)
-				TA0CCR2 = 1 << (Duty_Cycle - 1);
-			else
-				TA0CCR2 = 0;
+
+			TA0CCR2 = expon2(Duty_Cycle);
 		}
 		__bis_SR_register(LPM0_bits | GIE);
 		__no_operation();
