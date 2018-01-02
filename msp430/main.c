@@ -30,6 +30,7 @@ int main(void)
 	int Increment = 1;
 	unsigned int Time_Count = 0;
 	unsigned int Time_Left = 5;
+	unsigned int Time_Indicate = 2;
 
 	WDTCTL = WDTPW | WDTHOLD;	// stop watchdog timer
 	// Configure GPIO Out
@@ -107,13 +108,16 @@ int main(void)
 		_enable_interrupts();
 
 		// Button 2 or PIR events initiate light measurement
-		// and tuns on green led
+		// and tuns on green or red led
 		if (events & (1<<ev_btn2|1<<ev_pir1|1<<ev_pir2)) {
+			if (events & 1<<ev_pir1)
+				P1OUT |= BIT_GL;	// Set green LED on
+			if (events & 1<<ev_pir2)
+				P1OUT |= BIT_RL;	// Set red LED on
 			if (Duty_Cycle > 0) {
 				Time_Left = TIME_ON;
 				continue;
 			}
-			P1OUT |= BIT_GL;	// Set green LED on
 			// Sampling and conversion start
 #ifdef ADCENC
 			ADCCTL0 |= ADCENC | ADCSC;
@@ -125,7 +129,8 @@ int main(void)
 		// End of light measurement. Set new Duty_Cycle,
 		// zero increment and turn off green led
 		if (events & 1<<ev_adc) {
-			P1OUT &= ~BIT_GL;	// Clear green LED off
+			P1OUT ^= (BIT_GL|BIT_RL); // Flip green and red LEDs
+			Time_Indicate = 5;
 			if (Time_Left)
 				continue;
 			if (ADC_Result < LIGHT_THRESHOLD)
@@ -136,6 +141,8 @@ int main(void)
 
 		// Button 1 sets non-zero increment (and toggles it)
 		if (events & 1<<ev_btn1) {
+			P1OUT |= (BIT_GL|BIT_RL); // Set green and red LEDs on
+			Time_Indicate = 5;
 			if (Duty_Cycle > PWM_HALF) {
 				Time_Left = 0;
 				Increment = -1;
@@ -147,15 +154,18 @@ int main(void)
 
 		// Timer event (100 ms) changed duty cycle and flashes red led
 		if (events & 1<<ev_tmr) {
+			if (Time_Indicate) {
+				Time_Indicate--;
+				if (!Time_Indicate)
+					P1OUT &= ~(BIT_RL|BIT_GL); // LEDs off
+			}
 			if (Time_Count++ > 20) {
 				Time_Count = 0;
-				P1OUT |= BIT_RL; // red LED on
 				if (Time_Left)
 					Time_Left--;
 				else if (Duty_Cycle > 1)
 					Increment = -1;
-			} else if (Time_Count == 1)
-				P1OUT &= ~BIT_RL; // red LED off
+			}
 			if (Increment > 0) {
 				if (++Duty_Cycle >= PWM_ORDER) {
 					Duty_Cycle = PWM_ORDER;
