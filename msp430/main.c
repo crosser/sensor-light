@@ -6,7 +6,7 @@ enum {ev_btn1 = 0, ev_btn2, ev_pir1, ev_pir2, ev_tmr, ev_adc, ev_MAX};
 
 #define PWM_ORDER 10
 #define PWM_HALF 5
-#define LIGHT_THRESHOLD 200
+#define LIGHT_THRESHOLD 600
 #define TIME_ON 16
 	
 #ifdef ADCSC /* Let us hope that this is a "new" model */
@@ -114,10 +114,6 @@ int main(void)
 				P1OUT |= BIT_GL;	// Set green LED on
 			if (events & 1<<ev_pir2)
 				P1OUT |= BIT_RL;	// Set red LED on
-			if (Duty_Cycle > 0) {
-				Time_Left = TIME_ON;
-				continue;
-			}
 			// Sampling and conversion start
 #ifdef ADCENC
 			ADCCTL0 |= ADCENC | ADCSC;
@@ -131,8 +127,6 @@ int main(void)
 		if (events & 1<<ev_adc) {
 			P1OUT ^= (BIT_GL|BIT_RL); // Flip green and red LEDs
 			Time_Indicate = 5;
-			if (Time_Left)
-				continue;
 			if (ADC_Result < LIGHT_THRESHOLD)
 				continue;
 			Time_Left = TIME_ON;
