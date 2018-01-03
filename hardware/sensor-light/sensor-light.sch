@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:sensor-light-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -90,7 +91,7 @@ F 3 "" H 9300 4200 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L CONN_01X02_MALE J1
+L CONN_01X02_MALE-RESCUE-sensor-light J1
 U 1 1 5A4A4E4F
 P 1100 5400
 F 0 "J1" H 1100 5575 50  0000 C CNN
@@ -210,6 +211,37 @@ F 3 "" H 5750 2500 50  0001 C CNN
 	1    5750 2200
 	0    1    1    0   
 $EndComp
+NoConn ~ 7450 4100
+NoConn ~ 7450 4500
+NoConn ~ 7450 4700
+NoConn ~ 4050 4000
+NoConn ~ 4050 4100
+NoConn ~ 4050 4200
+NoConn ~ 4050 4300
+NoConn ~ 4050 4600
+NoConn ~ 4050 4700
+$Comp
+L R R3
+U 1 1 5A4C95F9
+P 7550 4950
+F 0 "R3" V 7630 4950 50  0000 C CNN
+F 1 "56 Ohm" V 7550 4950 50  0000 C CNN
+F 2 "" V 7480 4950 50  0001 C CNN
+F 3 "" H 7550 4950 50  0001 C CNN
+	1    7550 4950
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R4
+U 1 1 5A4C9666
+P 7800 4750
+F 0 "R4" V 7880 4750 50  0000 C CNN
+F 1 "56 Ohm" V 7800 4750 50  0000 C CNN
+F 2 "" V 7730 4750 50  0001 C CNN
+F 3 "" H 7800 4750 50  0001 C CNN
+	1    7800 4750
+	1    0    0    -1  
+$EndComp
 Wire Wire Line
 	1400 5500 9950 5500
 Wire Wire Line
@@ -284,11 +316,7 @@ Wire Wire Line
 	7800 5200 7800 5500
 Connection ~ 7800 5500
 Wire Wire Line
-	7550 5100 7550 4600
-Wire Wire Line
 	7550 4600 7450 4600
-Wire Wire Line
-	7800 4900 7800 4000
 Wire Wire Line
 	7800 4000 7450 4000
 Wire Wire Line
@@ -320,13 +348,8 @@ Wire Wire Line
 Wire Wire Line
 	6050 2500 6050 3300
 Connection ~ 6050 3300
-NoConn ~ 7450 4100
-NoConn ~ 7450 4500
-NoConn ~ 7450 4700
-NoConn ~ 4050 4000
-NoConn ~ 4050 4100
-NoConn ~ 4050 4200
-NoConn ~ 4050 4300
-NoConn ~ 4050 4600
-NoConn ~ 4050 4700
+Wire Wire Line
+	7800 4600 7800 4000
+Wire Wire Line
+	7550 4800 7550 4600
 $EndSCHEMATC
