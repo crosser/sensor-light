@@ -6,8 +6,8 @@ enum {ev_btn1 = 0, ev_btn2, ev_pir1, ev_pir2, ev_tmr, ev_adc, ev_MAX};
 
 #define PWM_ORDER 10
 #define PWM_HALF 5
-#define LIGHT_THRESHOLD 600
-#define TIME_ON 16
+#define LIGHT_THRESHOLD 800
+#define TIME_ON 160
 	
 #ifdef ADCSC /* Let us hope that this is a "new" model */
 # define BIT_RL BIT0
@@ -36,8 +36,7 @@ int main(void)
 {
 	int Duty_Cycle = 0;
 	int Increment = 1;
-	unsigned int Time_Count = 0;
-	unsigned int Time_Left = 5;
+	unsigned int Time_Left = 50;
 	unsigned int Time_Indicate = 2;
 
 	WDTCTL = WDTPW | WDTHOLD;	// stop watchdog timer
@@ -161,12 +160,11 @@ int main(void)
 				if (!Time_Indicate)
 					P1OUT &= ~(BIT_RL|BIT_GL); // LEDs off
 			}
-			if (Time_Count++ > 10) {
-				Time_Count = 0;
-				if (Time_Left)
-					Time_Left--;
-				else if (Duty_Cycle > 1)
-					Increment = -1;
+			if (Time_Left) {
+				Time_Left--;
+				if (!Time_Left)
+					if (Duty_Cycle)
+						Increment = -1;
 			}
 			if (Increment > 0) {
 				if (++Duty_Cycle >= (PWM_ORDER<<1)) {
@@ -178,7 +176,7 @@ int main(void)
 					Duty_Cycle = 0;
 					Increment = 0;
 				}
-			} else
+			} else // Increment _was_ zero - no change!
 				continue;
 
 			TA0CCR2 = expon2(Duty_Cycle);
