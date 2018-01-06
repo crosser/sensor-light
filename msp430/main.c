@@ -6,8 +6,8 @@ enum {ev_btn1 = 0, ev_btn2, ev_pir1, ev_pir2, ev_tmr, ev_adc, ev_MAX};
 
 #define PWM_ORDER 10
 #define PWM_HALF 5
-#define LIGHT_THRESHOLD 800
-#define TIME_ON 160
+#define LIGHT_THRESHOLD 900
+#define TIME_ON 320
 	
 #ifdef ADCSC /* Let us hope that this is a "new" model */
 # define BIT_RL BIT0
