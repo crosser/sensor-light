@@ -2,7 +2,7 @@
 <export version="D">
   <design>
     <source>/home/crosser/src/sensor-light/hardware/sensor-light/sensor-light.sch</source>
-    <date>Mon 01 Jan 2018 21:11:24 CET</date>
+    <date>Sat 10 Feb 2018 21:01:48 CET</date>
     <tool>Eeschema 4.0.6+dfsg1-1</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -28,35 +28,35 @@
     </comp>
     <comp ref="C1">
       <value>10uF</value>
-      <footprint>Capacitors_THT:CP_Radial_D4.0mm_P2.00mm</footprint>
+      <footprint>Capacitors_THT:CP_Radial_D12.5mm_P7.50mm</footprint>
       <libsource lib="device" part="CP"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>5A4A4C0F</tstamp>
     </comp>
     <comp ref="R2">
       <value>100 KOhm</value>
-      <footprint>Resistors_SMD:R_1218_HandSoldering</footprint>
+      <footprint>Resistors_THT:R_Axial_DIN0414_L11.9mm_D4.5mm_P20.32mm_Horizontal</footprint>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>5A4A4D3B</tstamp>
     </comp>
     <comp ref="R1">
       <value>27 Ohm</value>
-      <footprint>Resistors_SMD:R_1218_HandSoldering</footprint>
+      <footprint>Resistors_THT:R_Axial_DIN0414_L11.9mm_D4.5mm_P20.32mm_Horizontal</footprint>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>5A4A4DD8</tstamp>
     </comp>
     <comp ref="J1">
       <value>Power IN 12V</value>
-      <footprint>Socket_Strips:Socket_Strip_Straight_1x02_Pitch2.54mm</footprint>
-      <libsource lib="conn" part="CONN_01X02_MALE"/>
+      <footprint>Connectors:AK300-2</footprint>
+      <libsource lib="sensor-light-rescue" part="CONN_01X02_MALE-RESCUE-sensor-light"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>5A4A4E4F</tstamp>
     </comp>
     <comp ref="J6">
       <value>PWM Power OUT 12V</value>
-      <footprint>Socket_Strips:Socket_Strip_Straight_1x02_Pitch2.54mm</footprint>
+      <footprint>Connectors:AK300-2</footprint>
       <libsource lib="conn" part="CONN_01X02_FEMALE"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>5A4A4EAE</tstamp>
@@ -105,14 +105,14 @@
     </comp>
     <comp ref="D2">
       <value>Green</value>
-      <footprint>LEDs:LED_CREE-XQ_HandSoldering</footprint>
+      <footprint>LEDs:LED_D3.0mm</footprint>
       <libsource lib="device" part="LED"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>5A4A52F3</tstamp>
     </comp>
     <comp ref="D1">
       <value>Red</value>
-      <footprint>LEDs:LED_CREE-XQ_HandSoldering</footprint>
+      <footprint>LEDs:LED_D3.0mm</footprint>
       <libsource lib="device" part="LED"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>5A4A535C</tstamp>
@@ -123,6 +123,20 @@
       <libsource lib="conn" part="CONN_01X04_MALE"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>5A4A5801</tstamp>
+    </comp>
+    <comp ref="R3">
+      <value>56 Ohm</value>
+      <footprint>Resistors_THT:R_Axial_DIN0414_L11.9mm_D4.5mm_P20.32mm_Horizontal</footprint>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A4C95F9</tstamp>
+    </comp>
+    <comp ref="R4">
+      <value>56 Ohm</value>
+      <footprint>Resistors_THT:R_Axial_DIN0414_L11.9mm_D4.5mm_P20.32mm_Horizontal</footprint>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A4C9666</tstamp>
     </comp>
   </components>
   <libparts>
@@ -137,11 +151,10 @@
         <pin num="2" name="2" type="passive"/>
       </pins>
     </libpart>
-    <libpart lib="conn" part="CONN_01X02_MALE">
-      <description>Generic Male Connector, single row, 01x02, pin header</description>
+    <libpart lib="sensor-light-rescue" part="CONN_01X02_MALE-RESCUE-sensor-light">
       <fields>
         <field name="Reference">J</field>
-        <field name="Value">CONN_01X02_MALE</field>
+        <field name="Value">CONN_01X02_MALE-RESCUE-sensor-light</field>
       </fields>
       <pins>
         <pin num="1" name="1" type="power_out"/>
@@ -309,8 +322,14 @@
     </libpart>
   </libparts>
   <libraries>
+    <library logical="sensor-light-rescue">
+      <uri>/home/crosser/src/sensor-light/hardware/sensor-light/sensor-light-rescue.lib</uri>
+    </library>
     <library logical="device">
       <uri>/usr/share/kicad/library/device.lib</uri>
+    </library>
+    <library logical="conn">
+      <uri>/usr/share/kicad/library/conn.lib</uri>
     </library>
     <library logical="regul">
       <uri>/usr/share/kicad/library/regul.lib</uri>
@@ -321,110 +340,115 @@
     <library logical="switches">
       <uri>/usr/share/kicad/library/switches.lib</uri>
     </library>
-    <library logical="conn">
-      <uri>/usr/share/kicad/library/conn.lib</uri>
-    </library>
   </libraries>
   <nets>
-    <net code="1" name="Net-(R1-Pad2)">
-      <node ref="U2" pin="4"/>
-      <node ref="R1" pin="2"/>
-    </net>
-    <net code="2" name="Net-(J2-Pad2)">
-      <node ref="U2" pin="13"/>
-      <node ref="J2" pin="2"/>
-    </net>
-    <net code="3" name="Net-(J3-Pad2)">
-      <node ref="U2" pin="12"/>
-      <node ref="J3" pin="2"/>
-    </net>
-    <net code="4" name="Net-(SW1-Pad1)">
-      <node ref="SW1" pin="1"/>
-      <node ref="U2" pin="5"/>
-    </net>
-    <net code="5" name="Net-(Q1-Pad2)">
+    <net code="1" name="Net-(Q1-Pad2)">
+      <node ref="R2" pin="1"/>
       <node ref="R1" pin="1"/>
       <node ref="Q1" pin="2"/>
-      <node ref="R2" pin="1"/>
     </net>
-    <net code="6" name="Net-(J5-Pad2)">
+    <net code="2" name="Net-(J5-Pad2)">
       <node ref="J5" pin="2"/>
       <node ref="U2" pin="6"/>
     </net>
-    <net code="7" name="Net-(J6-Pad2)">
-      <node ref="J6" pin="2"/>
+    <net code="3" name="Net-(R1-Pad2)">
+      <node ref="U2" pin="4"/>
+      <node ref="R1" pin="2"/>
+    </net>
+    <net code="4" name="Net-(SW1-Pad1)">
+      <node ref="U2" pin="5"/>
+      <node ref="SW1" pin="1"/>
+    </net>
+    <net code="5" name="Net-(J6-Pad2)">
       <node ref="Q1" pin="1"/>
+      <node ref="J6" pin="2"/>
     </net>
-    <net code="8" name="Net-(J4-Pad3)">
-      <node ref="J4" pin="3"/>
-      <node ref="U2" pin="16"/>
+    <net code="6" name="Net-(C1-Pad1)">
+      <node ref="J2" pin="1"/>
+      <node ref="J5" pin="3"/>
+      <node ref="C1" pin="1"/>
+      <node ref="J3" pin="1"/>
+      <node ref="U1" pin="2"/>
+      <node ref="J4" pin="1"/>
+      <node ref="U2" pin="1"/>
     </net>
-    <net code="9" name="Net-(U2-Pad18)">
-      <node ref="U2" pin="18"/>
+    <net code="7" name="Net-(D2-Pad2)">
+      <node ref="D2" pin="2"/>
+      <node ref="R4" pin="2"/>
     </net>
-    <net code="10" name="Net-(U2-Pad19)">
-      <node ref="U2" pin="19"/>
-    </net>
-    <net code="11" name="Net-(U2-Pad11)">
-      <node ref="U2" pin="11"/>
-    </net>
-    <net code="12" name="Net-(U2-Pad10)">
-      <node ref="U2" pin="10"/>
-    </net>
-    <net code="13" name="Net-(U2-Pad9)">
-      <node ref="U2" pin="9"/>
-    </net>
-    <net code="14" name="Net-(U2-Pad8)">
-      <node ref="U2" pin="8"/>
-    </net>
-    <net code="15" name="Net-(U2-Pad15)">
-      <node ref="U2" pin="15"/>
-    </net>
-    <net code="16" name="Net-(U2-Pad7)">
-      <node ref="U2" pin="7"/>
-    </net>
-    <net code="17" name="Net-(U2-Pad3)">
-      <node ref="U2" pin="3"/>
-    </net>
-    <net code="18" name="Net-(J4-Pad2)">
+    <net code="8" name="Net-(J4-Pad2)">
       <node ref="J4" pin="2"/>
       <node ref="U2" pin="17"/>
     </net>
-    <net code="19" name="Net-(C1-Pad1)">
-      <node ref="C1" pin="1"/>
-      <node ref="J4" pin="1"/>
-      <node ref="J2" pin="1"/>
-      <node ref="J3" pin="1"/>
-      <node ref="J5" pin="3"/>
-      <node ref="U2" pin="1"/>
-      <node ref="U1" pin="2"/>
+    <net code="9" name="Net-(J4-Pad3)">
+      <node ref="J4" pin="3"/>
+      <node ref="U2" pin="16"/>
     </net>
-    <net code="20" name="Net-(D2-Pad2)">
+    <net code="10" name="Net-(R4-Pad1)">
+      <node ref="R4" pin="1"/>
       <node ref="U2" pin="2"/>
-      <node ref="D2" pin="2"/>
     </net>
-    <net code="21" name="Net-(D1-Pad2)">
+    <net code="11" name="Net-(R3-Pad1)">
+      <node ref="R3" pin="1"/>
       <node ref="U2" pin="14"/>
-      <node ref="D1" pin="2"/>
     </net>
-    <net code="22" name="Net-(C1-Pad2)">
-      <node ref="SW1" pin="2"/>
-      <node ref="J2" pin="3"/>
-      <node ref="J3" pin="3"/>
-      <node ref="D2" pin="1"/>
-      <node ref="U1" pin="1"/>
-      <node ref="J5" pin="1"/>
-      <node ref="D1" pin="1"/>
+    <net code="12" name="Net-(J2-Pad2)">
+      <node ref="U2" pin="13"/>
+      <node ref="J2" pin="2"/>
+    </net>
+    <net code="13" name="Net-(J3-Pad2)">
+      <node ref="J3" pin="2"/>
+      <node ref="U2" pin="12"/>
+    </net>
+    <net code="14" name="Net-(U2-Pad18)">
+      <node ref="U2" pin="18"/>
+    </net>
+    <net code="15" name="Net-(U2-Pad19)">
+      <node ref="U2" pin="19"/>
+    </net>
+    <net code="16" name="Net-(U2-Pad15)">
+      <node ref="U2" pin="15"/>
+    </net>
+    <net code="17" name="Net-(U2-Pad11)">
+      <node ref="U2" pin="11"/>
+    </net>
+    <net code="18" name="Net-(U2-Pad10)">
+      <node ref="U2" pin="10"/>
+    </net>
+    <net code="19" name="Net-(U2-Pad9)">
+      <node ref="U2" pin="9"/>
+    </net>
+    <net code="20" name="Net-(U2-Pad8)">
+      <node ref="U2" pin="8"/>
+    </net>
+    <net code="21" name="Net-(U2-Pad7)">
+      <node ref="U2" pin="7"/>
+    </net>
+    <net code="22" name="Net-(U2-Pad3)">
+      <node ref="U2" pin="3"/>
+    </net>
+    <net code="23" name="Net-(D1-Pad2)">
+      <node ref="D1" pin="2"/>
+      <node ref="R3" pin="2"/>
+    </net>
+    <net code="24" name="Net-(C1-Pad2)">
       <node ref="J4" pin="4"/>
-      <node ref="J1" pin="2"/>
-      <node ref="R2" pin="2"/>
-      <node ref="C1" pin="2"/>
+      <node ref="J5" pin="1"/>
+      <node ref="J3" pin="3"/>
+      <node ref="J2" pin="3"/>
+      <node ref="SW1" pin="2"/>
+      <node ref="D1" pin="1"/>
+      <node ref="D2" pin="1"/>
       <node ref="Q1" pin="3"/>
+      <node ref="C1" pin="2"/>
+      <node ref="R2" pin="2"/>
+      <node ref="J1" pin="2"/>
+      <node ref="U1" pin="1"/>
       <node ref="U2" pin="20"/>
     </net>
-    <net code="23" name="Net-(J1-Pad1)">
-      <node ref="J6" pin="1"/>
+    <net code="25" name="Net-(J1-Pad1)">
       <node ref="J1" pin="1"/>
+      <node ref="J6" pin="1"/>
       <node ref="U1" pin="3"/>
     </net>
   </nets>

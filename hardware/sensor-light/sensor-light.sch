@@ -63,7 +63,7 @@ U 1 1 5A4A4C0F
 P 2200 3900
 F 0 "C1" H 2225 4000 50  0000 L CNN
 F 1 "10uF" H 2225 3800 50  0000 L CNN
-F 2 "Capacitors_THT:CP_Radial_D4.0mm_P2.00mm" H 2238 3750 50  0001 C CNN
+F 2 "Capacitors_THT:CP_Radial_D5.0mm_P2.50mm" H 2238 3750 50  0001 C CNN
 F 3 "" H 2200 3900 50  0001 C CNN
 	1    2200 3900
 	1    0    0    -1  
@@ -74,7 +74,7 @@ U 1 1 5A4A4D3B
 P 9650 4850
 F 0 "R2" V 9730 4850 50  0000 C CNN
 F 1 "100 KOhm" V 9650 4850 50  0000 C BNN
-F 2 "Resistors_SMD:R_1218_HandSoldering" V 9580 4850 50  0001 C CNN
+F 2 "Resistors_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P12.70mm_Horizontal" V 9580 4850 50  0001 C CNN
 F 3 "" H 9650 4850 50  0001 C CNN
 	1    9650 4850
 	1    0    0    -1  
@@ -85,7 +85,7 @@ U 1 1 5A4A4DD8
 P 9300 4200
 F 0 "R1" V 9380 4200 50  0000 C CNN
 F 1 "27 Ohm" V 9300 4200 50  0000 C BNN
-F 2 "Resistors_SMD:R_1218_HandSoldering" V 9230 4200 50  0001 C CNN
+F 2 "Resistors_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P12.70mm_Horizontal" V 9230 4200 50  0001 C CNN
 F 3 "" H 9300 4200 50  0001 C CNN
 	1    9300 4200
 	0    1    1    0   
@@ -96,10 +96,10 @@ U 1 1 5A4A4E4F
 P 1100 5400
 F 0 "J1" H 1100 5575 50  0000 C CNN
 F 1 "Power IN 12V" H 1100 5200 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Straight_1x02_Pitch2.54mm" H 1100 5500 50  0001 C CNN
+F 2 "Connectors:AK300-2" H 1100 5500 50  0001 C CNN
 F 3 "" H 1100 5500 50  0001 C CNN
 	1    1100 5400
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L CONN_01X02_FEMALE J6
@@ -107,7 +107,7 @@ U 1 1 5A4A4EAE
 P 10050 2850
 F 0 "J6" H 10050 3000 50  0000 C CNN
 F 1 "PWM Power OUT 12V" H 10150 2850 50  0000 C BNN
-F 2 "Socket_Strips:Socket_Strip_Straight_1x02_Pitch2.54mm" H 10050 2850 50  0001 C CNN
+F 2 "Connectors:AK300-2" H 10050 2850 50  0001 C CNN
 F 3 "" H 10050 2850 50  0001 C CNN
 	1    10050 2850
 	1    0    0    -1  
@@ -137,12 +137,12 @@ $EndComp
 $Comp
 L CONN_01X03_MALE J5
 U 1 1 5A4A4FE3
-P 8950 3500
-F 0 "J5" H 8950 3775 50  0000 C CNN
-F 1 "Light Sensor" H 8975 3225 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Straight_1x03_Pitch2.54mm" H 8950 3700 50  0001 C CNN
-F 3 "" H 8950 3700 50  0001 C CNN
-	1    8950 3500
+P 8950 3300
+F 0 "J5" H 8950 3575 50  0000 C CNN
+F 1 "Light Sensor" H 8975 3025 50  0000 C CNN
+F 2 "Socket_Strips:Socket_Strip_Straight_1x03_Pitch2.54mm" H 8950 3500 50  0001 C CNN
+F 3 "" H 8950 3500 50  0001 C CNN
+	1    8950 3300
 	-1   0    0    1   
 $EndComp
 $Comp
@@ -154,7 +154,7 @@ F 1 "PIR Sensor 1" H 3175 3675 50  0000 C CNN
 F 2 "Socket_Strips:Socket_Strip_Straight_1x03_Pitch2.54mm" H 3150 4150 50  0001 C CNN
 F 3 "" H 3150 4150 50  0001 C CNN
 	1    3150 3950
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L CONN_01X03_MALE J2
@@ -165,7 +165,7 @@ F 1 "PIR Sensor 2" H 2575 4525 50  0000 C CNN
 F 2 "Socket_Strips:Socket_Strip_Straight_1x03_Pitch2.54mm" H 2550 5000 50  0001 C CNN
 F 3 "" H 2550 5000 50  0001 C CNN
 	1    2550 4800
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L SW_DIP_x01 SW1
@@ -173,7 +173,7 @@ U 1 1 5A4A528A
 P 8200 5200
 F 0 "SW1" H 8200 5350 50  0000 C CNN
 F 1 "Manual ON/OFF" H 8200 5050 50  0000 C CNN
-F 2 "Buttons_Switches_THT:SW_PUSH_SMALL" H 8200 5200 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm_h5mm" H 8200 5200 50  0001 C CNN
 F 3 "" H 8200 5200 50  0001 C CNN
 	1    8200 5200
 	0    1    1    0   
@@ -184,7 +184,7 @@ U 1 1 5A4A52F3
 P 7800 5050
 F 0 "D2" H 7800 5150 50  0000 C CNN
 F 1 "Green" H 7800 4950 50  0000 C CNN
-F 2 "LEDs:LED_CREE-XQ_HandSoldering" H 7800 5050 50  0001 C CNN
+F 2 "LEDs:LED_D3.0mm" H 7800 5050 50  0001 C CNN
 F 3 "" H 7800 5050 50  0001 C CNN
 	1    7800 5050
 	0    -1   -1   0   
@@ -195,7 +195,7 @@ U 1 1 5A4A535C
 P 7550 5250
 F 0 "D1" H 7550 5350 50  0000 C CNN
 F 1 "Red" H 7550 5150 50  0000 C CNN
-F 2 "LEDs:LED_CREE-XQ_HandSoldering" H 7550 5250 50  0001 C CNN
+F 2 "LEDs:LED_D3.0mm" H 7550 5250 50  0001 C CNN
 F 3 "" H 7550 5250 50  0001 C CNN
 	1    7550 5250
 	0    -1   -1   0   
@@ -209,7 +209,7 @@ F 1 "PROG Header" H 5750 1800 50  0000 C CNN
 F 2 "Socket_Strips:Socket_Strip_Straight_1x04_Pitch2.54mm" H 5750 2500 50  0001 C CNN
 F 3 "" H 5750 2500 50  0001 C CNN
 	1    5750 2200
-	0    1    1    0   
+	0    -1   1    0   
 $EndComp
 NoConn ~ 7450 4100
 NoConn ~ 7450 4500
@@ -226,7 +226,7 @@ U 1 1 5A4C95F9
 P 7550 4950
 F 0 "R3" V 7630 4950 50  0000 C CNN
 F 1 "56 Ohm" V 7550 4950 50  0000 C CNN
-F 2 "" V 7480 4950 50  0001 C CNN
+F 2 "Resistors_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P12.70mm_Horizontal" V 7480 4950 50  0001 C CNN
 F 3 "" H 7550 4950 50  0001 C CNN
 	1    7550 4950
 	1    0    0    -1  
@@ -237,7 +237,7 @@ U 1 1 5A4C9666
 P 7800 4750
 F 0 "R4" V 7880 4750 50  0000 C CNN
 F 1 "56 Ohm" V 7800 4750 50  0000 C CNN
-F 2 "" V 7730 4750 50  0001 C CNN
+F 2 "Resistors_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P12.70mm_Horizontal" V 7730 4750 50  0001 C CNN
 F 3 "" H 7800 4750 50  0001 C CNN
 	1    7800 4750
 	1    0    0    -1  
@@ -276,11 +276,11 @@ Connection ~ 5750 5500
 Wire Wire Line
 	7450 4400 8400 4400
 Wire Wire Line
-	8400 4400 8400 3500
+	8400 4400 8400 3100
 Wire Wire Line
-	8400 3500 8650 3500
+	8400 3100 8650 3100
 Wire Wire Line
-	8650 3700 8650 5500
+	8650 3500 8650 5500
 Connection ~ 8650 5500
 Wire Wire Line
 	9450 4200 9650 4200
@@ -334,15 +334,15 @@ Connection ~ 3800 5500
 Wire Wire Line
 	4050 3850 4050 3100
 Wire Wire Line
-	4050 3100 5650 3100
-Wire Wire Line
-	5650 3100 5650 2500
-Wire Wire Line
-	7450 3850 7450 3100
-Wire Wire Line
-	7450 3100 5850 3100
+	4050 3100 5850 3100
 Wire Wire Line
 	5850 3100 5850 2500
+Wire Wire Line
+	7450 3850 7450 2900
+Wire Wire Line
+	7450 2900 5650 2900
+Wire Wire Line
+	5650 2900 5650 2500
 Wire Wire Line
 	7550 5500 7550 5400
 Wire Wire Line
