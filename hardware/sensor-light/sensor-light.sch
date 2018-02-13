@@ -69,28 +69,6 @@ F 3 "" H 2200 3900 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R2
-U 1 1 5A4A4D3B
-P 9650 4850
-F 0 "R2" V 9730 4850 50  0000 C CNN
-F 1 "100 KOhm" V 9650 4850 50  0000 C BNN
-F 2 "Resistors_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P12.70mm_Horizontal" V 9580 4850 50  0001 C CNN
-F 3 "" H 9650 4850 50  0001 C CNN
-	1    9650 4850
-	1    0    0    -1  
-$EndComp
-$Comp
-L R R1
-U 1 1 5A4A4DD8
-P 9300 4200
-F 0 "R1" V 9380 4200 50  0000 C CNN
-F 1 "27 Ohm" V 9300 4200 50  0000 C BNN
-F 2 "Resistors_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P12.70mm_Horizontal" V 9230 4200 50  0001 C CNN
-F 3 "" H 9300 4200 50  0001 C CNN
-	1    9300 4200
-	0    1    1    0   
-$EndComp
-$Comp
 L CONN_01X02_MALE-RESCUE-sensor-light J1
 U 1 1 5A4A4E4F
 P 1100 5400
@@ -110,7 +88,7 @@ F 1 "PWM Power OUT 12V" H 10150 2850 50  0000 C BNN
 F 2 "Connectors:AK300-2" H 10050 2850 50  0001 C CNN
 F 3 "" H 10050 2850 50  0001 C CNN
 	1    10050 2850
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L Q_NMOS_DGS Q1
@@ -254,9 +232,9 @@ Wire Wire Line
 	1800 3600 1800 5500
 Connection ~ 1800 5500
 Wire Wire Line
-	1400 2750 1400 5300
+	1400 1900 1400 5300
 Wire Wire Line
-	1400 2750 9950 2750
+	1400 1900 9950 1900
 Connection ~ 1400 3300
 Wire Wire Line
 	2200 3300 2200 3750
@@ -266,12 +244,6 @@ Wire Wire Line
 	9950 5500 9950 4400
 Connection ~ 2200 5500
 Connection ~ 2200 3300
-Wire Wire Line
-	9650 4200 9650 4700
-Wire Wire Line
-	9650 5000 9650 5500
-Connection ~ 9650 5500
-Connection ~ 9650 4200
 Connection ~ 5750 5500
 Wire Wire Line
 	7450 4400 8400 4400
@@ -283,9 +255,7 @@ Wire Wire Line
 	8650 3500 8650 5500
 Connection ~ 8650 5500
 Wire Wire Line
-	9450 4200 9650 4200
-Wire Wire Line
-	9150 4200 7450 4200
+	7450 4200 9650 4200
 Connection ~ 8200 5500
 Wire Wire Line
 	8200 4300 8200 4900
@@ -352,4 +322,6 @@ Wire Wire Line
 	7800 4600 7800 4000
 Wire Wire Line
 	7550 4800 7550 4600
+Wire Wire Line
+	9950 1900 9950 2750
 $EndSCHEMATC
