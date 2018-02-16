@@ -19,3 +19,7 @@ Power regulator for MCU: TLV76033DBZT (TI, SOT-23-3, 100mA)
 Schottky Diode power in: 757-1SS404H3F (Toschiba, SOT-323-3, 300mA, 0.38V drop)
 			 PMEG6020ER (Nexperia, SOD123W, 2A, .5V drop)
 
+Resistors for LEDs:
+Red: 470
+Green: 390
+
