@@ -91,7 +91,7 @@ F 3 "" H 10050 2850 50  0001 C CNN
 	1    0    0    1   
 $EndComp
 $Comp
-L Q_NMOS_DGS Q1
+L Q_NMOS_GSD Q1
 U 1 1 5A4A4F0F
 P 9850 4200
 F 0 "Q1" H 10050 4250 50  0000 L CNN
@@ -157,7 +157,7 @@ F 3 "" H 8200 5200 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L LED D2
+L LED-RESCUE-sensor-light D2
 U 1 1 5A4A52F3
 P 7800 5050
 F 0 "D2" H 7800 5150 50  0000 C CNN
@@ -168,7 +168,7 @@ F 3 "" H 7800 5050 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L LED D1
+L LED-RESCUE-sensor-light D1
 U 1 1 5A4A535C
 P 7550 5250
 F 0 "D1" H 7550 5350 50  0000 C CNN
