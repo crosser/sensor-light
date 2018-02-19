@@ -5,4 +5,5 @@ motion sensors (two: for the top and bottom of the staircase).
 Ambient light sensor to only turn the LED chain when it is dark.
 Driven by MSP430 MCU, light power controlled via PWM + MOSFET.
 
-![](hardware/sensor-light.svg)
+![](hardware/sensor-light.sch.svg)
+![](hardware/sensor-light-brd.svg)

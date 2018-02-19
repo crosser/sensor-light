@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP CONN_01X04_FEMALE
+D Generic Female Connector, Single Row, 01x04, socket header
+K Connector, Female, Generic
+$ENDCMP
+#
+#End Doc Library
