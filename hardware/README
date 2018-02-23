@@ -23,3 +23,11 @@ Resistors for LEDs:
 Red: 470
 Green: 390 (270)
 
+LEDs: TLLR4400, TLLG4400 Vishay Semiconductors
+Vf=1.9V
+If=2mA
+
+
+
+Connector: AKZ692/4
+https://www.ptr.eu/no_cache/en/produkte/produkt-pdf-generator/?cat_id=355
