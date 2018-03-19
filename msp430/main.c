@@ -58,7 +58,7 @@ int main(void)
 
 	P2DIR &= ~(BIT4|BIT5);		// PIR Sensors
 	P2OUT &= ~(BIT4|BIT5);		// Pull down
-	P2REN |= BIT4|BIT5;		// Enable pull-down
+	P2REN &= ~(BIT4|BIT5);		// Disable pull
 	P2IES &= ~(BIT4|BIT5);		// INT on Lo->Hi edge
 	P2IE  |= BIT4|BIT5;		// INT enable
 
