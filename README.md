@@ -7,3 +7,4 @@ Driven by MSP430 MCU, light power controlled via PWM + MOSFET.
 
 ![](hardware/sensor-light.sch.svg)
 ![](hardware/sensor-light-brd.svg)
+![](hardware/finished-device.jpg)
